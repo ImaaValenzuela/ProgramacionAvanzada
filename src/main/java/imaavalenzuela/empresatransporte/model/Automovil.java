@@ -12,7 +12,6 @@ public class Automovil extends Vehiculo {
     public boolean puedeTransportar(Paquete paquete) {
         double volumenActual = 0;
         double pesoActual = 0;
-        int ciudadesUsadas = 0;
 
         for (Paquete p : paquetes) {
             if (p != null) {
@@ -21,26 +20,34 @@ public class Automovil extends Vehiculo {
             }
         }
 
-        boolean destinoExiste = false;
         for (String d : destinos) {
             if (d != null && d.equals(paquete.getDestino())) {
-                destinoExiste = true;
-                break;
+                return false; // Rechazar si el destino ya esta
             }
         }
 
-        if (!destinoExiste) {
+        return (volumenActual + paquete.calcularVolumen() <= volumenMaximo)
+                && (pesoActual + paquete.getPeso() <= pesoMaximo);
+    }
+
+
+    @Override
+    public void agregarPaquete(Paquete paquete){
+        if (puedeTransportar(paquete)) {
+            for (int i = 0; i < paquetes.length; i++) {
+                if (paquetes[i] == null) {
+                    paquetes[i] = paquete;
+                    break;
+                }
+            }
+
             for (int i = 0; i < destinos.length; i++) {
                 if (destinos[i] == null) {
                     destinos[i] = paquete.getDestino();
-                    destinoExiste = true;
                     break;
                 }
             }
         }
-
-        return destinoExiste
-                && (volumenActual + paquete.calcularVolumen() <= volumenMaximo)
-                && (pesoActual + paquete.getPeso() <= pesoMaximo);
     }
+
 }
