@@ -2,32 +2,34 @@ package imaavalenzuela.empresatransporte.service;
 
 import imaavalenzuela.empresatransporte.model.*;
 
-public class GestionTransporte {
-    private Vehiculo[] vehiculos = new Vehiculo[10];
+import java.util.ArrayList;
+import java.util.List;
 
-    public void agregarVehiculo(Vehiculo vehiculo) {
-        for (int i = 0; i < vehiculos.length; i++) {
-            if (vehiculos[i] == null) {
-                vehiculos[i] = vehiculo;
-                break;
-            }
-        }
+public class GestionTransporte {
+    private List<Vehiculo> vehiculos;
+
+    public GestionTransporte() {
+        vehiculos = new ArrayList<>();
+        vehiculos.add(new Bicicleta());
+        vehiculos.add(new Automovil());
+        vehiculos.add(new Camion());
     }
 
-    public Vehiculo[] obtenerVehiculosDisponibles(Paquete paquete) {
-        Vehiculo[] disponibles = new Vehiculo[vehiculos.length];
-        int contador = 0;
-
-        for (Vehiculo vehiculo : vehiculos) {
-            if (vehiculo != null && vehiculo.puedeTransportar(paquete)) {
-                disponibles[contador++] = vehiculo;
+    public List<Vehiculo> obtenerVehiculosDisponibles(Paquete paquete) {
+        List<Vehiculo> disponibles = new ArrayList<>();
+        for (Vehiculo v : vehiculos) {
+            if (v.puedeTransportar(paquete)) {
+                disponibles.add(v);
             }
         }
+        return disponibles;
+    }
 
-        Vehiculo[] resultado = new Vehiculo[contador];
-        for (int i = 0; i < contador; i++) {
-            resultado[i] = disponibles[i];
-        }
-        return resultado;
+    public void asignarPaquete(Vehiculo vehiculo, Paquete paquete) {
+        vehiculo.agregarPaquete(paquete);
+    }
+
+    public List<Vehiculo> getVehiculos() {
+        return vehiculos;
     }
 }

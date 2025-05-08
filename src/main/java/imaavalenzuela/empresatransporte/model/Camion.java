@@ -3,23 +3,21 @@ package imaavalenzuela.empresatransporte.model;
 public class Camion extends Vehiculo {
 
     public Camion() {
-        this.volumenMaximo = 20;
+        this.volumenMaximo = 20.0;
         this.pesoMaximo = 16000;
     }
 
     @Override
     public boolean puedeTransportar(Paquete paquete) {
-        double volumenActual = 0;
-        double pesoActual = 0;
+        double volumenTotal = 0;
+        double pesoTotal = 0;
 
         for (Paquete p : paquetes) {
-            if (p != null) {
-                volumenActual += p.calcularVolumen();
-                pesoActual += p.getPeso();
-            }
+            volumenTotal += p.calcularVolumen();
+            pesoTotal += p.getPeso();
         }
 
-        return (volumenActual + paquete.calcularVolumen() <= volumenMaximo)
-                && (pesoActual + paquete.getPeso() <= pesoMaximo);
+        return (volumenTotal + paquete.calcularVolumen() <= volumenMaximo) &&
+                (pesoTotal + paquete.getPeso() <= pesoMaximo);
     }
 }

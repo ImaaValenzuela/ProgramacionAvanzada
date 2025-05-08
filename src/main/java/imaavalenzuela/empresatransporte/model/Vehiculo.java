@@ -1,7 +1,10 @@
 package imaavalenzuela.empresatransporte.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class Vehiculo {
-    protected Paquete[] paquetes = new Paquete[10]; // Valor por default 10.
+    protected List<Paquete> paquetes = new ArrayList<>();
     protected double volumenMaximo;
     protected double pesoMaximo;
 
@@ -9,13 +12,12 @@ public abstract class Vehiculo {
 
     public void agregarPaquete(Paquete paquete){
         if (puedeTransportar(paquete)){
-            for (int i = 0; i < paquetes.length; i++){
-                if (paquetes[i] == null) {
-                    paquetes[i] = paquete;
-                    break;
-                }
+            paquetes.add(paquete);
             }
-        }
     }
 
+    public List<Paquete> getPaquetes(){
+        return paquetes;
+    }
 }
+

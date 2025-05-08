@@ -1,38 +1,34 @@
 package imaavalenzuela.empresatransporte.model;
 
-public class Bicicleta extends Vehiculo{
+public class Bicicleta extends Vehiculo {
     private String destino;
 
     public Bicicleta() {
-        this.volumenMaximo = 0.125 * 2; // Cumpliendo que solo puede llevar dos paquetes.
+        this.volumenMaximo = 0.125;
         this.pesoMaximo = 15;
     }
 
     @Override
     public boolean puedeTransportar(Paquete paquete) {
-        double volumenActual = 0;
-        double pesoActual = 0;
-        int cantidadPaquetes = 0;
+        double volumenTotal = 0;
+        double pesoTotal = 0;
 
-        for(Paquete paq : paquetes) {
-            if(paq != null){
-                volumenActual = volumenActual + paq.calcularVolumen();
-                pesoActual = pesoActual + paq.getPeso();
-                cantidadPaquetes++;
-            }
+        for (Paquete p : paquetes) {
+            volumenTotal += p.calcularVolumen();
+            pesoTotal += p.getPeso();
         }
 
-        if (cantidadPaquetes >= 2){
-            return false;
-        }
+        boolean mismoDestino = destino == null || destino.equals(paquete.getDestino());
+        return mismoDestino &&
+                (volumenTotal + paquete.calcularVolumen() <= volumenMaximo * 2) &&
+                (pesoTotal + paquete.getPeso() <= pesoMaximo);
+    }
 
-        if (destino== null){
+    @Override
+    public void agregarPaquete(Paquete paquete) {
+        if (destino == null) {
             destino = paquete.getDestino();
         }
-
-        return paquete.calcularVolumen() <= 0.125
-                && (volumenActual + paquete.calcularVolumen() <= pesoMaximo) &&
-                (pesoActual + paquete.getPeso() <= pesoMaximo)
-                && destino.equals(paquete.getDestino());
+        super.agregarPaquete(paquete);
     }
 }
