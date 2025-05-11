@@ -7,37 +7,59 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AutomovilTest {
     @Test
-    void testPuedeTransportarPaqueteDentroDeLimites() {
-        Automovil auto = new Automovil();
+    void debeAceptarPaqueteSiEstaDentroDeLimitesDePesoVolumenYDestinoUnico() {
+        // Given
+        Automovil automovil = new Automovil();
         Paquete paquete = new Paquete(1, 1, 1, 100, "Baticiudad");
-        assertTrue(auto.puedeTransportar(paquete));
+
+        // When
+        boolean puedeTransportar = automovil.puedeTransportar(paquete);
+
+        // Then
+        assertTrue(puedeTransportar);
     }
 
     @Test
-    void testRechazaPorPeso() {
-        Automovil auto = new Automovil();
+    void debeRechazarPaqueteSiSuperaElLimiteDePeso() {
+        // Given
+        Automovil automovil = new Automovil();
         Paquete paquete = new Paquete(1, 1, 1, 600, "Baticiudad");
-        assertFalse(auto.puedeTransportar(paquete));
+
+        // When
+        boolean puedeTransportar = automovil.puedeTransportar(paquete);
+
+        // Then
+        assertFalse(puedeTransportar);
     }
 
     @Test
-    void testRechazaPorDestinoRepetido() {
-        Automovil auto = new Automovil();
+    void debeRechazarPaqueteConDestinoRepetido() {
+        // Given
+        Automovil automovil = new Automovil();
         Paquete paquete1 = new Paquete(1, 1, 1, 100, "Baticiudad");
         Paquete paquete2 = new Paquete(1, 1, 1, 100, "Baticiudad");
+        automovil.agregarPaquete(paquete1);
 
-        auto.agregarPaquete(paquete1);
-        assertFalse(auto.puedeTransportar(paquete2));
+        // When
+        boolean puedeTransportar = automovil.puedeTransportar(paquete2);
+
+        // Then
+        assertFalse(puedeTransportar);
     }
 
     @Test
-    void testRechazaPorMasDe3Ciudades() {
-        Automovil auto = new Automovil();
-        auto.agregarPaquete(new Paquete(1, 1, 1, 100, "Baticiudad"));
-        auto.agregarPaquete(new Paquete(1, 1, 1, 100, "Paticiudad"));
-        auto.agregarPaquete(new Paquete(1, 1, 1, 100, "Gaticiudad"));
+    void debeRechazarPaqueteSiYaHayTresDestinosDistintos() {
+        // Given
+        Automovil automovil = new Automovil();
+        automovil.agregarPaquete(new Paquete(1, 1, 1, 100, "Baticiudad"));
+        automovil.agregarPaquete(new Paquete(1, 1, 1, 100, "Paticiudad"));
+        automovil.agregarPaquete(new Paquete(1, 1, 1, 100, "Gaticiudad"));
         Paquete nuevo = new Paquete(1, 1, 1, 100, "Bataciudad");
 
-        assertFalse(auto.puedeTransportar(nuevo));
+        // When
+        boolean puedeTransportar = automovil.puedeTransportar(nuevo);
+
+        // Then
+        assertFalse(puedeTransportar);
     }
 }

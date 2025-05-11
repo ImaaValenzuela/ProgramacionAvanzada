@@ -23,7 +23,10 @@ public class Automovil extends Vehiculo {
         }
 
         boolean destinoYaExiste = destinos.contains(paquete.getDestino());
-        boolean excedeLimiteDestinos = !destinoYaExiste && destinos.size() >= 3;
+
+        if (destinoYaExiste) return false;
+
+        boolean excedeLimiteDestinos = destinos.size() == 3 && !destinos.contains(paquete.getDestino());
 
         return !excedeLimiteDestinos &&
                 (volumenTotal + paquete.calcularVolumen() <= volumenMaximo) &&

@@ -8,24 +8,43 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CamionTest {
 
+
     @Test
-    void testPuedeTransportarDentroDeLimites() {
+    void debeAceptarPaqueteDentroDeLimitesDePesoYVolumen() {
+        // Given
         Camion camion = new Camion();
         Paquete paquete = new Paquete(2, 2, 2, 1000, "Ciudamion");
-        assertTrue(camion.puedeTransportar(paquete));
+
+        // When
+        boolean puedeTransportar = camion.puedeTransportar(paquete);
+
+        // Then
+        assertTrue(puedeTransportar);
     }
 
     @Test
-    void testRechazaPorPesoExcesivo() {
+    void debeRechazarPaqueteConPesoExcesivo() {
+        // Given
         Camion camion = new Camion();
         Paquete paquete = new Paquete(2, 2, 2, 20000, "Ciudamion");
-        assertFalse(camion.puedeTransportar(paquete));
+
+        // When
+        boolean puedeTransportar = camion.puedeTransportar(paquete);
+
+        // Then
+        assertFalse(puedeTransportar);
     }
 
     @Test
-    void testRechazaPorVolumenExcesivo() {
+    void debeRechazarPaqueteConVolumenExcesivo() {
+        // Given
         Camion camion = new Camion();
         Paquete paquete = new Paquete(10, 2, 2, 1000, "Ciudamion");
-        assertFalse(camion.puedeTransportar(paquete));
+
+        // When
+        boolean puedeTransportar = camion.puedeTransportar(paquete);
+
+        // Then
+        assertFalse(puedeTransportar);
     }
 }

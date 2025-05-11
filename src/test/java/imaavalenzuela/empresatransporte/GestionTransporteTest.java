@@ -2,28 +2,33 @@ package imaavalenzuela.empresatransporte;
 
 import imaavalenzuela.empresatransporte.model.*;
 import imaavalenzuela.empresatransporte.service.GestionTransporte;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class GestionTransporteTest {
 
+    private GestionTransporte gestion;
+
+    @BeforeEach
+    public void inicializar() {
+        gestion = new GestionTransporte();
+    }
+
     @Test
-    void testObtenerVehiculosDisponibles() {
-        GestionTransporte gestion = new GestionTransporte();
-        Bicicleta bici = new Bicicleta();
-        Automovil auto = new Automovil();
-        Camion camion = new Camion();
+    void debeRetornarVehiculosDisponiblesParaPaqueteLiviano() {
+        // Given
+        Paquete paqueteLiviano = new Paquete(0.2, 0.2, 0.2, 5, "Disponibilicity");
 
-        gestion.agregarVehiculo(bici);
-        gestion.agregarVehiculo(auto);
-        gestion.agregarVehiculo(camion);
+        // When
+        List<Vehiculo> disponibles = gestion.obtenerVehiculosDisponibles(paqueteLiviano);
 
-        Paquete paquete = new Paquete(0.25, 0.25, 0.25, 10, "La mismisima");
-
-        Vehiculo[] disponibles = gestion.obtenerVehiculosDisponibles(paquete);
-
-        assertTrue(disponibles.length >= 1);
-        assertTrue(disponibles[0].puedeTransportar(paquete));
+        // Then
+        assertTrue(disponibles.stream().anyMatch(v -> v instanceof Bicicleta));
+        assertTrue(disponibles.stream().anyMatch(v -> v instanceof Automovil));
+        assertTrue(disponibles.stream().anyMatch(v -> v instanceof Camion));
     }
 }
