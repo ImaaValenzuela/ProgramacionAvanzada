@@ -10,9 +10,6 @@ public class GestionTransporte {
 
     public GestionTransporte() {
         vehiculos = new ArrayList<>();
-        vehiculos.add(new Bicicleta());
-        vehiculos.add(new Automovil());
-        vehiculos.add(new Camion());
     }
 
     public List<Vehiculo> obtenerVehiculosDisponibles(Paquete paquete) {
@@ -31,5 +28,9 @@ public class GestionTransporte {
 
     public List<Vehiculo> getVehiculos() {
         return vehiculos;
+    }
+
+    public void setVehiculos(List<Vehiculo> vehiculos) {
+        this.vehiculos = vehiculos;
     }
 }
