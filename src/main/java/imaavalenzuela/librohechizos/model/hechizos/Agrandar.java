@@ -17,7 +17,10 @@ public class Agrandar implements Hechizo{
 	@Override
 	public void aplicarHechizo(Hechizable hechizable) {
 		// TODO Auto-generated method stub
-		hechizable.setEstado("Ahora soy más grande");
+	    if (nombre == null || nombre.isEmpty()) {
+	        return;
+	    }
+	    hechizable.setEstado("Ahora soy más grande");
 	}
 
 	@Override

@@ -40,5 +40,22 @@ class GestionHechizosTest {
 		hechizo.aplicarHechizo(mesa);
 		assertEquals("Ahora soy más grande", mesa.getEstado());
 	}
+	
+	@Test
+	void debeAgregarYRecuperarHechizo() {
+		// Given
+		LibroDeHechizos libro = new LibroDeHechizos();
+		Hechizo crecer = new Agrandar("crecerus");
+		// When
+		libro.agregarHechizo(crecer);
+		// Then
+		assertEquals(crecer, libro.buscar("crecerus"));
+	}
+	
+	@Test
+	void debeBuscarHechizoNull() {
+		LibroDeHechizos libro = new LibroDeHechizos();
+		assertNull(libro.buscar("noexistius"));
+	}
 
 }
